@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+  <meta content="utf-8" http-equiv="encoding" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
+
+  <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
+  <script src=" https://cdn.jsdelivr.net/npm/underscore@latest/underscore-umd-min.js"></script>
+  <style>
+    body {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
+    #stacks {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    #decks {
+      display: flex;
+      flex-direction: column;
+      white-space: nowrap;
+    }
+    #decks > div {
+      text-align: center;
+      padding: 1em;
+    }
+
+    #decks > div > p {
+      margin: 1em;
+    }
+
+    #decks > div > ul {
+      list-style: inside;
+      margin: 0;
+      padding: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      margin: 1em;
+    }
+
+    .stack > ul {
+      list-style: none;
+      margin: 0;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+    }
+
+    .current_player {
+      background-color: yellow;
+    }
+
+    #stacks.end_mode {
+      display: none !important;
+    }
+
+    #decks.end_mode {
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+
+    .dek_button {
+      display: none;
+    }
+    .dek_button.end_mode {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="stacks">
+    <div class="stack">
+      <button class="stack_button" data-stack="stack_1">Take Stack 1</button>
+      <ul id="stack_1"></ul>
+    </div>
+    <div class="stack">
+      <button class="stack_button" data-stack="stack_2">Take Stack 2</button>
+      <ul id="stack_2"></ul>
+    </div>
+    <div class="stack">
+      <button class="stack_button" data-stack="stack_3">Take Stack 3</button>
+      <ul id="stack_3"></ul>
+    </div>
+    <div class="stack">
+      <button class="stack_button" data-stack="stack_4">Take Stack 4</button>
+      <ul id="stack_4"></ul>
+    </div>
+  </div>
+  <div id="decks">
+    <div id="player_0" class="current_player">
+      <p class="player_title">Player 1</p>
+      <a class="button dek_button" id="dek_button_0">Download Dek</a>
+      <ul id="deck_0"></ul>
+    </div>
+    <div id="player_1">
+      <p class="player_title">Player 2</p>
+      <a class="button dek_button" id="dek_button_1">Download Dek</a>
+      <ul id="deck_1"></ul>
+    </div>
+  </div>
+  <script src="./getBoosters.js"></script>
+</body>
