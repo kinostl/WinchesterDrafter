@@ -117,8 +117,14 @@ u('button.stack_button').handle('click', e => {
     u('#stacks').addClass('end_mode')
     u('#decks').addClass('end_mode')
     u('.dek_button').addClass('end_mode')
-    u('#dek_button_0').attr({ href: getDek(decks[0]), download: 'Dek 0.dek' })
-    u('#dek_button_1').attr({ href: getDek(decks[1]), download: 'Dek 1.dek' })
+    u('#dek_button_0').attr({
+      href: getDek(decks[0]),
+      download: 'Player 1.dek'
+    })
+    u('#dek_button_1').attr({
+      href: getDek(decks[1]),
+      download: 'Player 2.dek'
+    })
     u(`#player_${currentPlayer}`).removeClass('current_player')
   } else {
     startTurn()
