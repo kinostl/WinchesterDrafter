@@ -11,14 +11,38 @@ const stacks = {
   stack_4: []
 }
 
+function getDraftBooster (symbol) {
+  // 10 Common
+  // 3  Uncommon
+  // 1 Rare or Mythic Rare
+  // Rare is 1/8
+  // Mythic is 7/8
+  const isMythic = _.random(1, 8) === 8
+
+  const urls = [
+    `https://api.magicthegathering.io/v1/cards?set=${symbol}&rarity=common&random=true&pageSize=10&types=Creature|Instant|Sorcery|Enchantment|Artifact|Planeswalker`,
+    `https://api.magicthegathering.io/v1/cards?set=${symbol}&rarity=uncommon&random=true&pageSize=3&types=Creature|Instant|Sorcery|Enchantment|Artifact|Planeswalker`,
+    `https://api.magicthegathering.io/v1/cards?set=${symbol}&rarity=${
+      isMythic ? 'mythic' : 'rare'
+    }&random=true&pageSize=1&types=Creature|Instant|Sorcery|Enchantment|Artifact|Planeswalker`
+  ]
+  const calls = []
+  for (const url of urls) {
+    calls.push(
+      Promise.resolve(res => setTimeout(res, 500))
+        .then(() => fetch(url))
+        .then(response => response.json())
+        .then(res => {
+          boosterDeck.push(...res.cards)
+        })
+    )
+  }
+
+  return calls
+}
+
 for (let i = 0; i < 6; i++) {
-  boosterCalls.push(
-    fetch('https://api.magicthegathering.io/v1/sets/ktk/booster')
-      .then(response => response.json())
-      .then(res => {
-        boosterDeck.push(...res.cards)
-      })
-  )
+  boosterCalls.push(...getDraftBooster('C21'))
 }
 
 function startTurn () {
@@ -53,9 +77,13 @@ function getDek (deck) {
   return 'data:' + 'text/plain;' + 'base64,' + btoa(deckList)
 }
 
-Promise.all(boosterCalls).then(() => {
+function startDraft () {
   boosterDeck = _.shuffle(boosterDeck)
   startTurn()
+}
+
+Promise.all(boosterCalls).then(() => {
+  startDraft()
 })
 
 u('button.stack_button').handle('click', e => {
